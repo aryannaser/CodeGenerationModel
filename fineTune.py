@@ -37,3 +37,17 @@ trainer = Trainer(
 )
 
 trainer.train()
+
+# define a function to generate code using the fine-tuned model
+def generate_code(prompt, max_length=100):
+    inputs = tokenizer(prompt, return_tensors="pt")
+    outputs = model.generate(inputs['input_ids'], max_length=max_length)
+    generated_code = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    return generated_code
+
+# test the model with a code generation prompt
+prompt = "def merge_sort(arr):"
+generated_code = generate_code(prompt)
+
+print("Generated Code:")
+print(generated_code)
